@@ -45,8 +45,9 @@ jobs:
           key: ${{ secrets.PEM_FILE_DEV }}
           script: |
             cd ~/back/dummy-project-back
+            git fetch
             git checkout ${{ steps.extract_branch.outputs.branch }}
-            git push
+            git pull
             npm install
             npm run build
             pm2 reload server
