@@ -40,8 +40,8 @@ jobs:
           key: ${{ secrets.PEM_FILE_DEV }}
           script: |
             cd ~/back/dummy-project-back
-            git checkout ${{ github.ref }}
-            git pull
+            git checkout ${{ github.event.inputs.branch }}
+            git push
             npm install
             npm run build
             pm2 reload server
