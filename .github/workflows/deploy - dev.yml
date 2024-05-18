@@ -59,4 +59,5 @@ jobs:
           key: ${{ secrets.PEM_FILE_DEV }}
           script: |
             RELEASE_DIR=~/releases/release_back
-            sudo ln -nfs $RELEASE_DIR/build /home/ubuntu/back
+            sudo ln -nfs $RELEASE_DIR/dist /home/ubuntu/back/dummy-project-back
+            pm2 reload server
