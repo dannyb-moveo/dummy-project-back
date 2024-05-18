@@ -26,38 +26,14 @@ jobs:
 
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
-        run: npm i
+        run: npm ci --ignore-scripts
 
       - name: Build app
         run: |
           npm run build
 
-      - name: Create or update release directory
-        uses: appleboy/ssh-action@master
-        with:
-          host: 52.57.211.196
-          username: ubuntu
-          key: ${{ secrets.PEM_FILE_DEV }}
-          script: |
-            RELEASE_DIR=~/releases/release_back
-            mkdir -p $RELEASE_DIR
-
-      - name: Transfer files to EC2 instance
-        uses: appleboy/scp-action@master
-        with:
-          host: 52.57.211.196
-          username: ubuntu
-          key: ${{ secrets.PEM_FILE_DEV }}
-          source: "dist/"
-          target: "~/releases/release_back"
-
-      - name: Create symbolic link
-        uses: appleboy/ssh-action@master
-        with:
-          host: 52.57.211.196
-          username: ubuntu
-          key: ${{ secrets.PEM_FILE_DEV }}
-          script: |
-            RELEASE_DIR=~/releases/release_back
-            sudo ln -nfs $RELEASE_DIR/dist /home/ubuntu/back/dummy-project-back
-            pm2 reload server
+      - name: Reload pm2 server
+        # if: ${{ success() }}
+        run: |
+          pm2 reload server
+          pm2 status
