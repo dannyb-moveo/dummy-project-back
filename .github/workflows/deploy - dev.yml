@@ -41,7 +41,7 @@ jobs:
           script: |
             cd ~/back/dummy-project-back
             git checkout ${{ github.ref }}
-            git push
+            git pull
             npm install
             npm run build
             pm2 reload server
