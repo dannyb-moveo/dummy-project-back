@@ -32,11 +32,15 @@ jobs:
         run: |
           npm run build
 
-      - name: Install pm2
-        run: npm install -g pm2
-
-      - name: Reload pm2 server
-        # if: ${{ success() }}
-        run: |
-          pm2 reload server
-          pm2 status
+      - name: Create or update release directory
+        uses: appleboy/ssh-action@master
+        with:
+          host: 52.57.211.196
+          username: ubuntu
+          key: ${{ secrets.PEM_FILE_DEV }}
+          script: |
+            cd ~/back/dummy-project-back
+            npm install
+            npm run build
+            pm2 reload server
+            pm2 status
