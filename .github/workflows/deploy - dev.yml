@@ -48,7 +48,7 @@ jobs:
           host: 52.57.211.196
           username: ubuntu
           key: ${{ secrets.PEM_FILE_DEV }}
-          source: "build/"
+          source: "dist/"
           target: "~/releases/release_back"
 
       - name: Create symbolic link
