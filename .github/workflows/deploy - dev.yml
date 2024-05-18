@@ -12,6 +12,11 @@ jobs:
       - name: Branch name
         run: echo running on branch ${GITHUB_REF##*/}
 
+      - name: Extract branch name
+        shell: bash
+        run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+        id: extract_branch
+
       - name: Setup Node.js 20.x
         uses: actions/setup-node@master
         with:
@@ -40,7 +45,7 @@ jobs:
           key: ${{ secrets.PEM_FILE_DEV }}
           script: |
             cd ~/back/dummy-project-back
-            git checkout ${{ github.event.inputs.branch }}
+            git checkout ${{ steps.extract_branch.outputs.branch }}
             git push
             npm install
             npm run build
