@@ -32,7 +32,7 @@ jobs:
         run: |
           npm run build
 
-      - name: Create or update release directory
+      - name: SSH into server and deploy
         uses: appleboy/ssh-action@master
         with:
           host: 52.57.211.196
@@ -40,6 +40,8 @@ jobs:
           key: ${{ secrets.PEM_FILE_DEV }}
           script: |
             cd ~/back/dummy-project-back
+            git checkout ${{ github.ref }}
+            git push
             npm install
             npm run build
             pm2 reload server
