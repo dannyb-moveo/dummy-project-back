@@ -11,6 +11,14 @@ app.get("/hello", (req, res) => {
   res.send("Hello, World!");
 });
 
+app.get("/api/hello", (req, res) => {
+  res.send("Hello, World!");
+});
+
+app.get("/api", (req, res) => {
+  res.send("Hello, World!");
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
