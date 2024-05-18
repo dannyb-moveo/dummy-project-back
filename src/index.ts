@@ -15,6 +15,10 @@ app.get("/api/hello", (req, res) => {
   res.send("Hello, World!");
 });
 
+app.get("/api/hello/world", (req, res) => {
+  res.send("Hello, World!");
+});
+
 app.get("/api", (req, res) => {
   res.send("Hello, World!");
 });
